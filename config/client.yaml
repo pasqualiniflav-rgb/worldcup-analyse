@@ -1,0 +1,35 @@
+# ============================================================
+#  FICHIER DE CONFIGURATION CLIENT
+#  Un fichier par client. On ne change QUE ce fichier pour
+#  déployer la même solution chez une autre fédération.
+# ============================================================
+
+client:
+  nom: "Fédération Nationale de Football (DÉMO)"
+  code: "DEMO"
+  sport: "football"
+  langue: "fr"
+
+# Identité visuelle (utilisée dans les rapports)
+branding:
+  couleur_primaire: "#0B3D2E"      # vert foncé
+  couleur_secondaire: "#C8A24B"    # or
+  couleur_accent: "#B23A48"        # rouge alerte
+  logo: "assets/logo_demo.png"     # optionnel
+
+# Catégories propres au client (modulables)
+categories:
+  postes: ["GB", "DD", "DC", "DG", "MDF", "MC", "MOC", "AILD", "AILG", "AVC", "BU"]
+  selections: ["A", "Espoirs U21", "U19", "U17"]
+  statuts_convocation: ["Cadre", "Rotation", "À suivre", "Vivier", "Écarté"]
+
+# Barème de notation des observations (sur 10 par défaut)
+notation:
+  echelle_min: 1
+  echelle_max: 10
+
+# Seuils d'alerte (module médical / forme)
+alertes:
+  jours_sans_match_max: 21          # alerte si un joueur n'a pas joué depuis X jours
+  note_forme_basse: 5               # alerte si la moyenne récente passe sous ce seuil
+  temps_jeu_faible_pct: 40          # alerte si temps de jeu club < X % sur la période

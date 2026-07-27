@@ -1,0 +1,31 @@
+# ============================================================
+#  CONFIG DU MODULE VIDÉO (POC)
+# ============================================================
+
+modele:
+  # yolo11n = le plus léger/rapide (CPU ok pour tester).
+  # yolo11s / yolo11m = plus précis mais plus lourds (GPU recommandé).
+  poids: "yolo11n.pt"
+  conf_min: 0.30            # seuil de confiance de détection
+  # Classes COCO utiles : 0 = person, 32 = sports ball
+  classes: [0, 32]
+  tracker: "bytetrack.yaml"
+
+traitement:
+  segment_debut: "00:00:00"    # début de la vidéo
+  segment_duree: 300           # 300 secondes = 5 minutes
+  frame_stride: 3              # 1 image sur 3 (accélère ×3)
+  redim_largeur: 1280          # réduit la résolution pour aller plus vite
+
+equipes:
+  activer: true               # classification par couleur de maillot (KMeans 2)
+  echantillons_par_track: 6   # nb de crops échantillonnés par joueur
+
+autoclip:
+  padding_avant: 2.0          # secondes ajoutées avant chaque séquence
+  padding_apres: 2.0          # secondes ajoutées après
+  gap_max: 1.5                # fusionne 2 séquences si écart < X s
+  duree_min: 1.0              # ignore les séquences plus courtes que X s
+
+sorties:
+  dossier: "out"              # relatif au dossier video/

@@ -1,0 +1,11 @@
+# Dépendances du module vidéo (en plus de celles du projet principal).
+# ultralytics installe automatiquement torch (lourd : ~1-2 Go).
+ultralytics>=8.3
+opencv-python>=4.8
+scikit-learn>=1.3
+matplotlib>=3.7
+PyYAML>=6.0
+# ffmpeg doit être installé sur le système (pas via pip) :
+#   Windows  : winget install Gyan.FFmpeg   (ou télécharger ffmpeg.org)
+#   macOS    : brew install ffmpeg
+#   Linux    : sudo apt install ffmpeg

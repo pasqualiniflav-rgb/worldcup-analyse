@@ -1,0 +1,7 @@
+# Dépendances minimales — installation locale, aucun serveur requis.
+# pip install -r requirements.txt
+pandas>=2.0
+openpyxl>=3.1
+PyYAML>=6.0
+Jinja2>=3.1
+streamlit>=1.30      # optionnel : uniquement pour le mini-dashboard

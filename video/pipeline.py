@@ -6,7 +6,7 @@ CSV + la vidéo, et sont donc entièrement testables (voir selftest.py).
 from __future__ import annotations
 
 import subprocess
-from collections import defaultdict
+from collections import defaultdict, Counter
 from pathlib import Path
 
 import cv2
@@ -15,7 +15,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from common import load_video_config, read_tracking, out_dir
+from common import load_video_config, read_tracking, out_dir, ffmpeg_exe
 
 TEAM_BGR = {"A": (60, 76, 231), "B": (231, 160, 60), "": (200, 200, 200)}
 
@@ -158,7 +158,7 @@ def autoclip(video_path: Path, tracking_csv: Path, track_id: int,
     for i, (s, e) in enumerate(segs, 1):
         dur = round(e - s, 2)
         out_clip = clip_dir / f"seq_{i:03d}_{s:.1f}s.mp4"
-        cmd = ["ffmpeg", "-y", "-ss", f"{s:.2f}", "-i", str(video_path),
+        cmd = [ffmpeg_exe(), "-y", "-ss", f"{s:.2f}", "-i", str(video_path),
                "-t", f"{dur:.2f}", "-c:v", "libx264", "-preset", "veryfast",
                "-crf", "23", "-an", "-loglevel", "error", str(out_clip)]
         subprocess.run(cmd, check=True)
@@ -170,10 +170,135 @@ def autoclip(video_path: Path, tracking_csv: Path, track_id: int,
         listfile.write_text("".join(f"file '{c.name}'\n" for c in clips), encoding="utf-8")
         reel = out_dir() / f"montage_joueur_{track_id}.mp4"
         subprocess.run(
-            ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(listfile),
+            [ffmpeg_exe(), "-y", "-f", "concat", "-safe", "0", "-i", str(listfile),
              "-c", "copy", "-loglevel", "error", str(reel)], check=True)
         print(f"Montage complet -> {reel}")
     return clips
+
+
+# --------------------------------------------------------------------------
+#  4) Vignette d'identité : gros plan du joueur ciblé
+# --------------------------------------------------------------------------
+def _track_rows(rows, track_id):
+    return [r for r in rows if r["track_id"] == track_id and r["cls"] == 0]
+
+
+def _track_label(trk, track_id):
+    """Étiquette lisible : 'N°7 A' si le numéro est connu, sinon '#<id>'."""
+    nums = [r.get("numero") for r in trk if r.get("numero")]
+    teams = [r.get("team") for r in trk if r.get("team")]
+    team = Counter(teams).most_common(1)[0][0] if teams else None
+    if nums:
+        num = Counter(nums).most_common(1)[0][0]
+        return f"N.{num}" + (f" {team}" if team else "")
+    return f"#{track_id}"
+
+
+def player_thumbnail(video_path: Path, tracking_csv: Path, track_id: int,
+                     out_png: Path | None = None):
+    rows = read_tracking(tracking_csv)
+    trk = _track_rows(rows, track_id)
+    if not trk:
+        print(f"Aucune donnée pour le joueur #{track_id}.")
+        return None
+    # frame où la boîte est la plus grande (joueur le plus proche/net)
+    best = max(trk, key=lambda r: r["w"] * r["h"])
+    cap = cv2.VideoCapture(str(video_path))
+    cap.set(cv2.CAP_PROP_POS_FRAMES, best["frame"])
+    ok, frame = cap.read()
+    cap.release()
+    if not ok:
+        return None
+    H, W = frame.shape[:2]
+    x, y, w, h = best["x"], best["y"], best["w"], best["h"]
+    mx, my = w * 0.6, h * 0.4
+    x1 = int(max(0, x - w / 2 - mx)); x2 = int(min(W, x + w / 2 + mx))
+    y1 = int(max(0, y - h / 2 - my)); y2 = int(min(H, y + h / 2 + my))
+    crop = frame[y1:y2, x1:x2].copy()
+    # boîte du joueur dans le crop
+    cv2.rectangle(crop, (int(x - w / 2 - x1), int(y - h / 2 - y1)),
+                  (int(x + w / 2 - x1), int(y + h / 2 - y1)), (0, 255, 255), 2)
+    cv2.putText(crop, _track_label(trk, track_id), (5, 22), cv2.FONT_HERSHEY_SIMPLEX,
+                0.8, (0, 255, 255), 2)
+    out_png = out_png or (out_dir() / f"joueur_{track_id}_identite.png")
+    cv2.imwrite(str(out_png), crop)
+    print(f"Vignette d'identité -> {out_png}")
+    return out_png
+
+
+# --------------------------------------------------------------------------
+#  5) Montage ANNOTÉ : le joueur ciblé est entouré tout au long du film
+# --------------------------------------------------------------------------
+def _frame_segments(frames_present, fps, cfg):
+    if not frames_present:
+        return []
+    gap_f = cfg["autoclip"]["gap_max"] * fps
+    pad_a = cfg["autoclip"]["padding_avant"] * fps
+    pad_b = cfg["autoclip"]["padding_apres"] * fps
+    fr = sorted(frames_present)
+    segs, start, prev = [], fr[0], fr[0]
+    for f in fr[1:]:
+        if f - prev > gap_f:
+            segs.append((start, prev)); start = f
+        prev = f
+    segs.append((start, prev))
+    padded = [(max(0, s - pad_a), e + pad_b) for s, e in segs]
+    merged = []
+    for s, e in padded:
+        if merged and s <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], e))
+        else:
+            merged.append((s, e))
+    return merged
+
+
+def annotated_montage(video_path: Path, tracking_csv: Path, track_id: int,
+                      cfg: dict | None = None, out_path: Path | None = None):
+    cfg = cfg or load_video_config()
+    rows = read_tracking(tracking_csv)
+    trk = _track_rows(rows, track_id)
+    if not trk:
+        print(f"Aucune donnée pour le joueur #{track_id}.")
+        return None
+    pos = {r["frame"]: r for r in trk}
+    label = _track_label(trk, track_id)
+
+    cap = cv2.VideoCapture(str(video_path))
+    fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
+    W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    Hh = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    segs = _frame_segments(list(pos.keys()), fps, cfg)
+    include = lambda f: any(s <= f <= e for s, e in segs)
+
+    out_path = out_path or (out_dir() / f"montage_joueur_{track_id}.mp4")
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    vw = cv2.VideoWriter(str(out_path), fourcc, fps, (W, Hh))
+
+    written = 0
+    f = 0
+    while True:
+        ok, frame = cap.read()
+        if not ok or f > total:
+            break
+        if include(f):
+            r = pos.get(f)
+            if r:
+                x, y, w, h = r["x"], r["y"], r["w"], r["h"]
+                p1 = (int(x - w / 2), int(y - h / 2)); p2 = (int(x + w / 2), int(y + h / 2))
+                cv2.rectangle(frame, p1, p2, (0, 255, 255), 3)
+                cv2.putText(frame, label, (p1[0], max(20, p1[1] - 8)),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 255), 2)
+                # marqueur au-dessus de la tête
+                cv2.circle(frame, (int(x), int(y - h / 2 - 12)), 6, (0, 255, 255), -1)
+            vw.write(frame)
+            written += 1
+        f += 1
+    cap.release(); vw.release()
+    dur = written / fps if fps else 0
+    print(f"Montage annoté -> {out_path}  ({written} images, ~{dur:.0f}s)")
+    return out_path
 
 
 if __name__ == "__main__":

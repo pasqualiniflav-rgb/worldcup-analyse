@@ -16,7 +16,7 @@ from pathlib import Path
 
 import cv2
 
-from common import load_video_config, out_dir, write_tracking
+from common import load_video_config, out_dir, write_tracking, VIDEO_DIR
 
 CLS_NAMES = {0: "player", 32: "ball"}
 
@@ -33,6 +33,12 @@ def run(video_path: Path, cfg: dict | None = None) -> Path:
     stride = int(t.get("frame_stride") or 1)
     imgsz = int(t.get("redim_largeur") or 1280)
 
+    # Résout un tracker local (ex. bytetrack_custom.yaml posé à côté du script)
+    tracker = m["tracker"]
+    local_tracker = VIDEO_DIR / tracker
+    if local_tracker.exists():
+        tracker = str(local_tracker)
+
     # Lecture des métadonnées vidéo (fps + nb total d'images) pour la progression
     cap = cv2.VideoCapture(str(video_path))
     fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
@@ -48,7 +54,7 @@ def run(video_path: Path, cfg: dict | None = None) -> Path:
         source=str(video_path),
         classes=m["classes"],
         conf=m["conf_min"],
-        tracker=m["tracker"],
+        tracker=tracker,
         vid_stride=stride,
         imgsz=imgsz,
         stream=True,

@@ -3,19 +3,19 @@
 # ============================================================
 
 modele:
-  # yolo11n = le plus léger/rapide (CPU ok pour tester).
-  # yolo11s / yolo11m = plus précis mais plus lourds (GPU recommandé).
-  poids: "yolo11n.pt"
+  # yolo11n = le plus léger/rapide | yolo11s = bon compromis (recommandé) |
+  # yolo11m = plus précis mais lent sur CPU (idéal avec GPU).
+  poids: "yolo11s.pt"
   conf_min: 0.30            # seuil de confiance de détection
   # Classes COCO utiles : 0 = person, 32 = sports ball
   classes: [0, 32]
-  tracker: "bytetrack.yaml"
+  tracker: "bytetrack_custom.yaml"   # réglage anti-fragmentation (fichier local)
 
 traitement:
-  segment_debut: "00:00:00"    # début de la vidéo
-  segment_duree: 300           # 300 secondes = 5 minutes
-  frame_stride: 3              # 1 image sur 3 (accélère ×3)
-  redim_largeur: 1280          # réduit la résolution pour aller plus vite
+  segment_debut: "00:16:20"
+  segment_duree: 60
+  frame_stride: 1
+  redim_largeur: 1280
 
 equipes:
   activer: true               # classification par couleur de maillot (KMeans 2)
@@ -29,3 +29,19 @@ autoclip:
 
 sorties:
   dossier: "out"              # relatif au dossier video/
+
+systeme:
+  # Laisser vide = détection automatique de ffmpeg (PATH ou binaire embarqué).
+  # Sinon, forcer un chemin complet, ex. "C:/ffmpeg/bin/ffmpeg.exe"
+  ffmpeg: ""
+
+homographie:
+  flip_x: false
+  flip_y: false
+
+numeros:
+  echantillons_par_track: 12
+  conf_min: 0.40
+  lectures_min: 2
+  conf_moyenne_min: 0.45
+  haute_resolution: true     # lit les numéros dans la vidéo d'origine (1080p)

@@ -1,0 +1,24 @@
+numero,nom,prenom,poste,statut,notes
+1,SANN SAT NAING,,GB,Titulaire,Gardien
+2,HEIN PHYO WIN,,,Titulaire,
+3,HEIN ZEYAR LIN,,,Titulaire,
+5,NANDA KYAW,,,Titulaire,Capitaine
+6,KYAW MIN OO,,,Titulaire,
+7,LWIN MOE AUNG,,,Titulaire,
+8,WAI LIN AUNG,,,Titulaire,
+9,THAN PAING,,,Titulaire,
+11,ZAW WIN THEIN,,,Titulaire,
+19,HEIN HTET AUNG,,,Titulaire,
+20,MYAT KAUNG KHANT,,,Titulaire,
+4,MYAT PHONE KHANT,,,Remplaçant,
+10,WIN NAING TUN,,,Remplaçant,
+12,AUNG WUNNA SOE,,,Remplaçant,
+13,KHUN KYAW ZIN HEIN,,,Remplaçant,
+14,MIN MAW OO,,,Remplaçant,
+15,ZWE KHANT MIN,,,Remplaçant,
+16,THUREIN SOE,,,Remplaçant,
+17,AUNG MYO KHANT,,,Remplaçant,
+18,NAY LIN HTET,,GB,Remplaçant,Gardien
+21,YE YINT AUNG,,,Remplaçant,
+22,SA AUNG PYAE KO,,,Remplaçant,
+23,ZIN NYI NYI AUNG,,GB,Remplaçant,Gardien

@@ -1,0 +1,10 @@
+# Tracker ByteTrack réglé pour RÉDUIRE la fragmentation des identités.
+# Points clés : track_buffer élevé (garde un joueur "perdu" plus longtemps
+# avant de recycler son ID) et seuils un peu plus tolérants.
+tracker_type: bytetrack
+track_high_thresh: 0.25     # seuil des détections "sûres" pour l'association
+track_low_thresh: 0.10      # récupère les détections faibles (2e passe)
+new_track_thresh: 0.30      # crée un NOUVEL ID seulement au-dessus de ce seuil
+track_buffer: 90            # nb d'images pendant lesquelles un ID perdu est conservé
+match_thresh: 0.85          # tolérance d'association (IoU)
+fuse_score: true

@@ -1,0 +1,182 @@
+{
+  "11": {
+    "numero": "6",
+    "lectures": 4,
+    "score": 2.67,
+    "conf_moyenne": 0.67
+  },
+  "13": {
+    "numero": "10",
+    "lectures": 7,
+    "score": 4.31,
+    "conf_moyenne": 0.62
+  },
+  "1056": {
+    "numero": "2",
+    "lectures": 3,
+    "score": 2.6,
+    "conf_moyenne": 0.87
+  },
+  "1323": {
+    "numero": "19",
+    "lectures": 5,
+    "score": 4.42,
+    "conf_moyenne": 0.88
+  },
+  "1385": {
+    "numero": "70",
+    "lectures": 2,
+    "score": 1.22,
+    "conf_moyenne": 0.61
+  },
+  "1438": {
+    "numero": "7",
+    "lectures": 4,
+    "score": 3.94,
+    "conf_moyenne": 0.98
+  },
+  "2877": {
+    "numero": "9",
+    "lectures": 3,
+    "score": 2.49,
+    "conf_moyenne": 0.83
+  },
+  "2852": {
+    "numero": "2",
+    "lectures": 12,
+    "score": 11.99,
+    "conf_moyenne": 1.0
+  },
+  "3052": {
+    "numero": "9",
+    "lectures": 2,
+    "score": 1.0,
+    "conf_moyenne": 0.5
+  },
+  "3549": {
+    "numero": "10",
+    "lectures": 2,
+    "score": 1.99,
+    "conf_moyenne": 0.99
+  },
+  "3889": {
+    "numero": "7",
+    "lectures": 2,
+    "score": 0.91,
+    "conf_moyenne": 0.45
+  },
+  "3874": {
+    "numero": "6",
+    "lectures": 2,
+    "score": 1.67,
+    "conf_moyenne": 0.83
+  },
+  "3870": {
+    "numero": "10",
+    "lectures": 6,
+    "score": 3.44,
+    "conf_moyenne": 0.57
+  },
+  "3866": {
+    "numero": "10",
+    "lectures": 3,
+    "score": 1.4,
+    "conf_moyenne": 0.47
+  },
+  "4082": {
+    "numero": "2",
+    "lectures": 8,
+    "score": 6.47,
+    "conf_moyenne": 0.81
+  },
+  "4356": {
+    "numero": "6",
+    "lectures": 3,
+    "score": 2.93,
+    "conf_moyenne": 0.98
+  },
+  "4909": {
+    "numero": "19",
+    "lectures": 4,
+    "score": 3.61,
+    "conf_moyenne": 0.9
+  },
+  "5841": {
+    "numero": "2",
+    "lectures": 5,
+    "score": 4.49,
+    "conf_moyenne": 0.9
+  },
+  "6072": {
+    "numero": "4",
+    "lectures": 2,
+    "score": 1.97,
+    "conf_moyenne": 0.99
+  },
+  "6445": {
+    "numero": "1",
+    "lectures": 2,
+    "score": 1.93,
+    "conf_moyenne": 0.96
+  },
+  "6998": {
+    "numero": "1",
+    "lectures": 7,
+    "score": 4.55,
+    "conf_moyenne": 0.65
+  },
+  "6666": {
+    "numero": "2",
+    "lectures": 4,
+    "score": 2.99,
+    "conf_moyenne": 0.75
+  },
+  "7063": {
+    "numero": "19",
+    "lectures": 5,
+    "score": 3.96,
+    "conf_moyenne": 0.79
+  },
+  "7130": {
+    "numero": "7",
+    "lectures": 3,
+    "score": 2.7,
+    "conf_moyenne": 0.9
+  },
+  "7394": {
+    "numero": "1",
+    "lectures": 7,
+    "score": 5.01,
+    "conf_moyenne": 0.72
+  },
+  "7606": {
+    "numero": "2",
+    "lectures": 12,
+    "score": 11.52,
+    "conf_moyenne": 0.96
+  },
+  "7663": {
+    "numero": "2",
+    "lectures": 2,
+    "score": 1.99,
+    "conf_moyenne": 1.0
+  },
+  "8005": {
+    "numero": "9",
+    "lectures": 7,
+    "score": 6.97,
+    "conf_moyenne": 1.0
+  },
+  "8085": {
+    "numero": "20",
+    "lectures": 9,
+    "score": 7.47,
+    "conf_moyenne": 0.83
+  },
+  "8162": {
+    "numero": "19",
+    "lectures": 7,
+    "score": 3.99,
+    "conf_moyenne": 0.57
+  }
+}

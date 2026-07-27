@@ -1,0 +1,140 @@
+[
+  {
+    "equipe": "A",
+    "numero": "1",
+    "fragments": 3,
+    "detections": 565,
+    "secondes_presence": 18.9,
+    "track_ids": [
+      6445,
+      6998,
+      7394
+    ]
+  },
+  {
+    "equipe": "A",
+    "numero": "2",
+    "fragments": 5,
+    "detections": 1553,
+    "secondes_presence": 51.8,
+    "track_ids": [
+      1056,
+      2852,
+      4082,
+      5841,
+      6666
+    ]
+  },
+  {
+    "equipe": "A",
+    "numero": "4",
+    "fragments": 1,
+    "detections": 454,
+    "secondes_presence": 15.1,
+    "track_ids": [
+      6072
+    ]
+  },
+  {
+    "equipe": "A",
+    "numero": "6",
+    "fragments": 1,
+    "detections": 10,
+    "secondes_presence": 0.3,
+    "track_ids": [
+      11
+    ]
+  },
+  {
+    "equipe": "A",
+    "numero": "7",
+    "fragments": 3,
+    "detections": 162,
+    "secondes_presence": 5.4,
+    "track_ids": [
+      1438,
+      3889,
+      7130
+    ]
+  },
+  {
+    "equipe": "A",
+    "numero": "10",
+    "fragments": 4,
+    "detections": 580,
+    "secondes_presence": 19.4,
+    "track_ids": [
+      13,
+      3549,
+      3866,
+      3870
+    ]
+  },
+  {
+    "equipe": "B",
+    "numero": "2",
+    "fragments": 2,
+    "detections": 349,
+    "secondes_presence": 11.6,
+    "track_ids": [
+      7606,
+      7663
+    ]
+  },
+  {
+    "equipe": "B",
+    "numero": "6",
+    "fragments": 2,
+    "detections": 592,
+    "secondes_presence": 19.8,
+    "track_ids": [
+      3874,
+      4356
+    ]
+  },
+  {
+    "equipe": "B",
+    "numero": "9",
+    "fragments": 3,
+    "detections": 682,
+    "secondes_presence": 22.8,
+    "track_ids": [
+      2877,
+      3052,
+      8005
+    ]
+  },
+  {
+    "equipe": "B",
+    "numero": "19",
+    "fragments": 4,
+    "detections": 766,
+    "secondes_presence": 25.6,
+    "track_ids": [
+      1323,
+      4909,
+      7063,
+      8162
+    ]
+  },
+  {
+    "equipe": "B",
+    "numero": "20",
+    "fragments": 1,
+    "detections": 315,
+    "secondes_presence": 10.5,
+    "track_ids": [
+      8085
+    ]
+  },
+  {
+    "equipe": "B",
+    "numero": "70",
+    "fragments": 1,
+    "detections": 101,
+    "secondes_presence": 3.4,
+    "track_ids": [
+      1385
+    ]
+  }
+]

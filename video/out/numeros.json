@@ -1,32 +1,32 @@
 {
   "10": {
     "numero": "3",
-    "lectures": 6,
-    "score": 5.38
+    "lectures": 11,
+    "score": 10.74,
+    "conf_moyenne": 0.98
   },
   "38": {
     "numero": "31",
     "lectures": 10,
-    "score": 7.73
-  },
-  "507": {
-    "numero": "4",
-    "lectures": 7,
-    "score": 2.27
+    "score": 8.76,
+    "conf_moyenne": 0.88
   },
   "931": {
     "numero": "5",
-    "lectures": 8,
-    "score": 7.88
+    "lectures": 7,
+    "score": 6.99,
+    "conf_moyenne": 1.0
   },
   "1174": {
     "numero": "15",
-    "lectures": 5,
-    "score": 1.56
+    "lectures": 7,
+    "score": 4.05,
+    "conf_moyenne": 0.58
   },
-  "927": {
-    "numero": "0",
+  "1286": {
+    "numero": "7",
     "lectures": 4,
-    "score": 4.0
+    "score": 3.71,
+    "conf_moyenne": 0.93
   }
 }
